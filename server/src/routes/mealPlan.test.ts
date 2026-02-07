@@ -45,6 +45,7 @@ describe('API Routes', () => {
         fiber: 30,
         calories: 2000,
       },
+      selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     };
 
     it('should return 400 for invalid request body', async () => {

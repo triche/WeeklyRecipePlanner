@@ -10,6 +10,7 @@ describe('MealPlanRequestSchema', () => {
         fiber: 30,
         calories: 2000,
       },
+      selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       dietaryRestrictions: ['vegetarian'],
       favoriteCuisines: ['Italian'],
       specificMeals: ['Greek Salad'],
@@ -33,6 +34,7 @@ describe('MealPlanRequestSchema', () => {
     };
 
     const result = MealPlanRequestSchema.parse(minimalRequest);
+    expect(result.selectedDays).toEqual(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
     expect(result.dietaryRestrictions).toEqual([]);
     expect(result.favoriteCuisines).toEqual([]);
     expect(result.specificMeals).toEqual([]);
@@ -62,6 +64,31 @@ describe('MealPlanRequestSchema', () => {
     };
 
     expect(() => MealPlanRequestSchema.parse(invalidRequest)).toThrow();
+  });
+
+  it('should reject an empty selectedDays array', () => {
+    const invalidRequest = {
+      macroGoals: { protein: 100, carbohydrates: 150, fats: 50, fiber: 25 },
+      selectedDays: [],
+    };
+    expect(() => MealPlanRequestSchema.parse(invalidRequest)).toThrow();
+  });
+
+  it('should reject invalid day names in selectedDays', () => {
+    const invalidRequest = {
+      macroGoals: { protein: 100, carbohydrates: 150, fats: 50, fiber: 25 },
+      selectedDays: ['Funday'],
+    };
+    expect(() => MealPlanRequestSchema.parse(invalidRequest)).toThrow();
+  });
+
+  it('should accept a partial selectedDays list', () => {
+    const request = {
+      macroGoals: { protein: 100, carbohydrates: 150, fats: 50, fiber: 25 },
+      selectedDays: ['Monday', 'Wednesday', 'Friday'],
+    };
+    const result = MealPlanRequestSchema.parse(request);
+    expect(result.selectedDays).toEqual(['Monday', 'Wednesday', 'Friday']);
   });
 });
 

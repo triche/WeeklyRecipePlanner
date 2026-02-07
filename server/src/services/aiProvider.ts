@@ -255,9 +255,10 @@ IMPORTANT RULES:
   }
 
   private buildInstructions(): string {
-    return `You are a professional nutritionist and meal planner. Generate a complete 7-day meal plan with exact macros and a consolidated shopping list.
+    return `You are a professional nutritionist and meal planner. Generate a meal plan for the specified days with exact macros and a consolidated shopping list.
 
 IMPORTANT RULES:
+- Only include days that the user has selected
 - Every day MUST include: breakfast, morningSnack, lunch, afternoonSnack, dinner
 - Daily macros should be as close as possible to the user's targets
 - The shopping list MUST aggregate identical ingredients across all meals
@@ -274,6 +275,10 @@ IMPORTANT RULES:
     parts.push(`- Fiber: ${request.macroGoals.fiber}g`);
     if (request.macroGoals.calories) {
       parts.push(`- Calories: ${request.macroGoals.calories}`);
+    }
+
+    if (request.selectedDays && request.selectedDays.length > 0 && request.selectedDays.length < 7) {
+      parts.push(`\nDays to plan: ${request.selectedDays.join(', ')}`);
     }
 
     if (request.dietaryRestrictions.length > 0) {

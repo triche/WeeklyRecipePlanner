@@ -41,6 +41,7 @@ describe('OpenAIProvider', () => {
 
     const request: MealPlanRequest = {
       macroGoals: { protein: 150, carbohydrates: 200, fats: 65, fiber: 30 },
+      selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       dietaryRestrictions: [],
       favoriteCuisines: [],
       specificMeals: [],
@@ -70,6 +71,7 @@ describe('OpenAIProvider', () => {
 
     const request: MealPlanRequest = {
       macroGoals: { protein: 150, carbohydrates: 200, fats: 65, fiber: 30 },
+      selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       dietaryRestrictions: ['vegetarian'],
       favoriteCuisines: ['Italian'],
       specificMeals: ['Salad'],
