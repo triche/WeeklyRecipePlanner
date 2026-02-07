@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { MealPlanForm, MealPlanDisplay, ShoppingListDisplay, DevConsole } from './components';
 import { generateMealPlan } from './services/api';
-import { MealPlanRequest, MealPlanResponse } from './types';
+import { MealPlanRequest, MealPlanResponse, ALL_DAYS } from './types';
 import devLogger from './services/devLogger';
 
 const defaultFormData: MealPlanRequest = {
@@ -13,6 +13,7 @@ const defaultFormData: MealPlanRequest = {
     fiber: 30,
     calories: 2000,
   },
+  selectedDays: [...ALL_DAYS],
   dietaryRestrictions: [],
   favoriteCuisines: [],
   specificMeals: [],

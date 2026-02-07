@@ -1,6 +1,7 @@
 import React from 'react';
 import { MacroGoals, MealPlanRequest } from '../types';
 import TagInput from './TagInput';
+import DayOfWeekSelector from './DayOfWeekSelector';
 
 interface MealPlanFormProps {
   formData: MealPlanRequest;
@@ -94,6 +95,10 @@ const MealPlanForm: React.FC<MealPlanFormProps> = ({ formData, onChange, onSubmi
 
       <div className="card">
         <h2 className="card-title">🍽️ Preferences</h2>
+        <DayOfWeekSelector
+          selectedDays={formData.selectedDays}
+          onChange={(days) => onChange({ ...formData, selectedDays: days })}
+        />
         <div className="form-row">
           <TagInput
             label="Dietary Restrictions"

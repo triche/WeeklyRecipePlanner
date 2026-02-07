@@ -10,8 +10,19 @@ export const MacroGoalsSchema = z.object({
   fiber: z.number().min(0).describe('grams'),
 });
 
+export const DayOfWeekEnum = z.enum([
+  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+]);
+
+export type DayOfWeek = z.infer<typeof DayOfWeekEnum>;
+
+export const ALL_DAYS: DayOfWeek[] = [
+  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+];
+
 export const MealPlanRequestSchema = z.object({
   macroGoals: MacroGoalsSchema,
+  selectedDays: z.array(DayOfWeekEnum).min(1, 'Select at least one day').default([...ALL_DAYS]),
   dietaryRestrictions: z.array(z.string()).default([]),
   favoriteCuisines: z.array(z.string()).default([]),
   specificMeals: z.array(z.string()).default([]),

@@ -8,8 +8,13 @@ export interface MacroGoals {
   fiber: number;
 }
 
+export type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+
+export const ALL_DAYS: DayOfWeek[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
 export interface MealPlanRequest {
   macroGoals: MacroGoals;
+  selectedDays: DayOfWeek[];
   dietaryRestrictions: string[];
   favoriteCuisines: string[];
   specificMeals: string[];
