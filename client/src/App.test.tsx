@@ -1,15 +1,16 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { vi, type Mock } from 'vitest';
 import App from './App';
 
 // Mock the API module
-jest.mock('./services/api', () => ({
-  generateMealPlan: jest.fn(),
+vi.mock('./services/api', () => ({
+  generateMealPlan: vi.fn(),
 }));
 
 import { generateMealPlan } from './services/api';
 
-const mockGenerateMealPlan = generateMealPlan as jest.MockedFunction<typeof generateMealPlan>;
+const mockGenerateMealPlan = generateMealPlan as Mock;
 
 describe('App', () => {
   beforeEach(() => {
@@ -37,7 +38,6 @@ describe('App', () => {
 
   it('shows loading state when generating', async () => {
     mockGenerateMealPlan.mockImplementation(
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       () => new Promise(() => {}) // Never resolves, to keep loading state
     );
 

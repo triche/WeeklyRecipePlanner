@@ -17,11 +17,11 @@ AI-powered weekly meal planner with macro tracking and shopping list generation.
 
 | Layer     | Technology                              |
 |-----------|-----------------------------------------|
-| Frontend  | React 18, TypeScript                    |
+| Frontend  | React 18, TypeScript, Vite              |
 | Backend   | Node.js, Express, TypeScript            |
 | AI        | OpenAI API (GPT-5.2 or later)            |
 | Infra     | Docker, Docker Compose, GitHub Actions  |
-| Testing   | Jest, React Testing Library, Supertest  |
+| Testing   | Vitest, React Testing Library, Supertest|
 
 ## Getting Started
 
@@ -98,8 +98,8 @@ The app will be available at `http://localhost:3000` with the API at `http://loc
 
 ```
 WeeklyRecipePlanner/
-├── client/                  # React frontend
-│   ├── public/
+├── client/                  # React frontend (Vite)
+│   ├── index.html
 │   ├── src/
 │   │   ├── components/      # React components
 │   │   │   ├── MealPlanForm.tsx
@@ -110,6 +110,9 @@ WeeklyRecipePlanner/
 │   │   ├── App.tsx
 │   │   ├── App.css
 │   │   └── types.ts
+│   ├── vite.config.ts
+│   ├── vitest.config.ts
+│   ├── eslint.config.js
 │   ├── Dockerfile
 │   └── nginx.conf
 ├── server/                  # Express backend
@@ -137,6 +140,7 @@ WeeklyRecipePlanner/
 | `PORT`          | No       | `3001`    | Server port                 |
 | `NODE_ENV`      | No       | `development` | Environment              |
 | `CORS_ORIGIN`   | No       | `http://localhost:3000` | Allowed CORS origin |
+| `VITE_API_URL`  | No       | `/api`    | Client API base URL         |
 
 ## CI/CD
 

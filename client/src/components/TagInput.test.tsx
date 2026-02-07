@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import TagInput from './TagInput';
 
 describe('TagInput', () => {
   it('renders with label and placeholder', () => {
     render(
-      <TagInput label="Test Tags" tags={[]} onChange={jest.fn()} placeholder="Add tags" />
+      <TagInput label="Test Tags" tags={[]} onChange={vi.fn()} placeholder="Add tags" />
     );
     expect(screen.getByText('Test Tags')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Add tags')).toBeInTheDocument();
@@ -14,14 +15,14 @@ describe('TagInput', () => {
 
   it('displays existing tags', () => {
     render(
-      <TagInput label="Tags" tags={['Italian', 'Mexican']} onChange={jest.fn()} />
+      <TagInput label="Tags" tags={['Italian', 'Mexican']} onChange={vi.fn()} />
     );
     expect(screen.getByText('Italian')).toBeInTheDocument();
     expect(screen.getByText('Mexican')).toBeInTheDocument();
   });
 
   it('adds a tag when Enter is pressed', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <TagInput label="Tags" tags={[]} onChange={onChange} placeholder="Add" />
     );
@@ -32,7 +33,7 @@ describe('TagInput', () => {
   });
 
   it('removes a tag when X is clicked', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <TagInput label="Tags" tags={['Italian', 'Mexican']} onChange={onChange} />
     );
@@ -43,7 +44,7 @@ describe('TagInput', () => {
   });
 
   it('does not add duplicate tags', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(
       <TagInput label="Tags" tags={['Italian']} onChange={onChange} placeholder="Add" />
     );

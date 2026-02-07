@@ -14,10 +14,10 @@ This is an AI-powered weekly meal planning application with a React frontend and
 - Keep the AI provider interface generic to allow easy model upgrades
 
 ## Architecture
-- **Frontend**: React 18 with TypeScript, functional components, hooks
+- **Frontend**: React 18 with TypeScript, Vite, functional components, hooks
 - **Backend**: Node.js + Express + TypeScript, structured as routes/services/types
 - **AI**: OpenAI API via the `openai` npm package, abstracted behind an `AIProvider` interface
-- **Testing**: Jest + React Testing Library (frontend), Jest + Supertest (backend)
+- **Testing**: Vitest + React Testing Library (frontend), Jest + Supertest (backend)
 - **Infrastructure**: Docker + Docker Compose, GitHub Actions CI
 
 ## Coding Standards

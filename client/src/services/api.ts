@@ -1,6 +1,6 @@
 import { MealPlanRequest, MealPlanResponse } from '../types';
 
-const API_BASE = process.env.REACT_APP_API_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export async function generateMealPlan(request: MealPlanRequest): Promise<MealPlanResponse> {
   const response = await fetch(`${API_BASE}/meal-plan/generate`, {
