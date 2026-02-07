@@ -122,7 +122,7 @@ const MealPlanForm: React.FC<MealPlanFormProps> = ({ formData, onChange, onSubmi
             checked={formData.excludePreviousWeekMeals}
             onChange={(e) => onChange({ ...formData, excludePreviousWeekMeals: e.target.checked })}
           />
-          <label htmlFor="excludePrevious">Don't repeat meals from previous week</label>
+          <label htmlFor="excludePrevious">Don&apos;t repeat meals from previous week</label>
         </div>
 
         {formData.excludePreviousWeekMeals && (

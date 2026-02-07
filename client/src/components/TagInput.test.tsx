@@ -6,7 +6,7 @@ import TagInput from './TagInput';
 describe('TagInput', () => {
   it('renders with label and placeholder', () => {
     render(
-      <TagInput label="Test Tags" tags={[]} onChange={() => {}} placeholder="Add tags" />
+      <TagInput label="Test Tags" tags={[]} onChange={jest.fn()} placeholder="Add tags" />
     );
     expect(screen.getByText('Test Tags')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Add tags')).toBeInTheDocument();
@@ -14,7 +14,7 @@ describe('TagInput', () => {
 
   it('displays existing tags', () => {
     render(
-      <TagInput label="Tags" tags={['Italian', 'Mexican']} onChange={() => {}} />
+      <TagInput label="Tags" tags={['Italian', 'Mexican']} onChange={jest.fn()} />
     );
     expect(screen.getByText('Italian')).toBeInTheDocument();
     expect(screen.getByText('Mexican')).toBeInTheDocument();

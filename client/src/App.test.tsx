@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import App from './App';
 
 // Mock the API module
@@ -38,6 +37,7 @@ describe('App', () => {
 
   it('shows loading state when generating', async () => {
     mockGenerateMealPlan.mockImplementation(
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       () => new Promise(() => {}) // Never resolves, to keep loading state
     );
 
