@@ -29,6 +29,7 @@
         <li><strong>Consolidated shopping list</strong> Aggregated by category (Produce, Dairy, Meat &amp; Seafood, etc.)</li>
         <li><strong>Export options</strong> Copy shopping list to clipboard or download as Markdown</li>
         <li><strong>Free text input</strong> Provide any additional context for the AI to consider</li>
+        <li><strong>Dev Console</strong> Built-in developer console for real-time log monitoring and error details (toggle with Ctrl+Shift+D)</li>
         <li><strong>Dockerized</strong> Run locally or deploy to any cloud platform</li>
       </ul>
     </section>
@@ -121,11 +122,12 @@
 │   ├── index.html
 │   ├── <span class="folder">src/</span>
 │   │   ├── <span class="folder">components/</span>      <span class="note"># React components</span>
+│   │   │   ├── DevConsole.tsx     <span class="note"># Dev mode log viewer</span>
 │   │   │   ├── MealPlanForm.tsx
 │   │   │   ├── MealPlanDisplay.tsx
 │   │   │   ├── ShoppingListDisplay.tsx
 │   │   │   └── TagInput.tsx
-│   │   ├── <span class="folder">services/</span>        <span class="note"># API client</span>
+│   │   ├── <span class="folder">services/</span>        <span class="note"># API client &amp; dev logger</span>
 │   │   ├── App.tsx
 │   │   ├── App.css
 │   │   └── types.ts
@@ -171,6 +173,27 @@
           <tr><td><code>VITE_API_URL</code></td><td>No</td><td><code>/api</code></td><td>Client API base URL</td></tr>
         </tbody>
       </table>
+    </section>
+
+    <!-- Dev Mode -->
+    <section>
+      <h2>Dev Mode</h2>
+      <p>The app includes a built-in developer console for debugging. It captures all <code>console.log</code>, <code>console.info</code>, <code>console.warn</code>, and <code>console.error</code> output, plus unhandled errors and promise rejections.</p>
+
+      <h3>How to activate</h3>
+      <ul class="features" style="grid-template-columns: repeat(2, 1fr);">
+        <li><strong>Toggle button</strong> Click the 🛠 button in the bottom-right corner of the screen</li>
+        <li><strong>Keyboard shortcut</strong> Press <code>Ctrl+Shift+D</code> (Cmd+Shift+D on Mac)</li>
+      </ul>
+
+      <h3>Console features</h3>
+      <ul class="features">
+        <li><strong>Real-time log stream</strong> Color-coded levels (log, info, warn, error)</li>
+        <li><strong>Level filtering</strong> Filter by log level with badge counts for errors and warnings</li>
+        <li><strong>Stack traces</strong> Click error entries to expand full stack traces</li>
+        <li><strong>Clear console</strong> Clear button to reset the console</li>
+        <li><strong>API logging</strong> API requests are automatically logged with request/response details</li>
+      </ul>
     </section>
 
     <!-- CI/CD -->

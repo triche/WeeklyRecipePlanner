@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { MealPlanForm, MealPlanDisplay, ShoppingListDisplay } from './components';
+import { MealPlanForm, MealPlanDisplay, ShoppingListDisplay, DevConsole } from './components';
 import { generateMealPlan } from './services/api';
 import { MealPlanRequest, MealPlanResponse } from './types';
+import devLogger from './services/devLogger';
 
 const defaultFormData: MealPlanRequest = {
   macroGoals: {
@@ -25,6 +26,25 @@ const App: React.FC = () => {
   const [mealPlan, setMealPlan] = useState<MealPlanResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [devMode, setDevMode] = useState(false);
+
+  // Install the dev logger once on mount
+  useEffect(() => {
+    devLogger.install();
+    return () => devLogger.uninstall();
+  }, []);
+
+  // Toggle dev mode with Ctrl+Shift+D (or Cmd+Shift+D on Mac)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'D') {
+        e.preventDefault();
+        setDevMode((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleGenerate = async (): Promise<void> => {
     setIsLoading(true);
@@ -40,7 +60,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app">
+    <div className={`app ${devMode ? 'dev-mode-active' : ''}`}>
       <header className="app-header">
         <h1>🍽️ Weekly Menu Planner</h1>
         <p>AI-powered meal planning with macro tracking</p>
@@ -72,6 +92,18 @@ const App: React.FC = () => {
           <ShoppingListDisplay shoppingList={mealPlan.shoppingList} />
         </>
       )}
+
+      {/* Dev mode toggle button (always visible, small) */}
+      <button
+        className="dev-mode-toggle"
+        onClick={() => setDevMode((prev) => !prev)}
+        title="Toggle Dev Console (Ctrl+Shift+D)"
+        aria-label="Toggle Dev Console"
+      >
+        {devMode ? '🛠 Dev' : '🛠'}
+      </button>
+
+      <DevConsole visible={devMode} onClose={() => setDevMode(false)} />
     </div>
   );
 };

@@ -9,6 +9,7 @@ This is an AI-powered weekly meal planning application with a React frontend and
 ## Development Principles
 - Always create tests for any new features added or bugs fixed
 - Always update the README.md with any new features or changes to existing features
+- Always update `docs/index.html` whenever `README.md` is changed — they must stay in sync
 - Follow TypeScript strict mode — no `any` types without justification
 - Use Zod schemas for all API request validation
 - Keep the AI provider interface generic to allow easy model upgrades
