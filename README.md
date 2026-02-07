@@ -11,6 +11,7 @@ AI-powered weekly meal planner with macro tracking and shopping list generation.
 - **Consolidated shopping list** — Aggregated by category (Produce, Dairy, Meat & Seafood, etc.)
 - **Export options** — Copy shopping list to clipboard or download as Markdown
 - **Free text input** — Provide any additional context for the AI to consider
+- **Dev Console** — Built-in developer console for real-time log monitoring and error details (toggle with Ctrl+Shift+D)
 - **Dockerized** — Run locally or deploy to any cloud platform
 
 ## Tech Stack
@@ -102,11 +103,12 @@ WeeklyRecipePlanner/
 │   ├── index.html
 │   ├── src/
 │   │   ├── components/      # React components
+│   │   │   ├── DevConsole.tsx     # Dev mode log viewer
 │   │   │   ├── MealPlanForm.tsx
 │   │   │   ├── MealPlanDisplay.tsx
 │   │   │   ├── ShoppingListDisplay.tsx
 │   │   │   └── TagInput.tsx
-│   │   ├── services/        # API client
+│   │   ├── services/        # API client & dev logger
 │   │   ├── App.tsx
 │   │   ├── App.css
 │   │   └── types.ts
@@ -141,6 +143,21 @@ WeeklyRecipePlanner/
 | `NODE_ENV`      | No       | `development` | Environment              |
 | `CORS_ORIGIN`   | No       | `http://localhost:3000` | Allowed CORS origin |
 | `VITE_API_URL`  | No       | `/api`    | Client API base URL         |
+
+## Dev Mode
+
+The app includes a built-in developer console for debugging. It captures all `console.log`, `console.info`, `console.warn`, and `console.error` output, plus unhandled errors and promise rejections.
+
+**How to activate:**
+- Click the 🛠 button in the bottom-right corner of the screen
+- Or press **Ctrl+Shift+D** (Cmd+Shift+D on Mac)
+
+**Features:**
+- Real-time log stream with color-coded levels (log, info, warn, error)
+- Filter by log level with badge counts for errors and warnings
+- Click error entries to expand full stack traces
+- Clear button to reset the console
+- API requests are automatically logged with request/response details
 
 ## CI/CD
 

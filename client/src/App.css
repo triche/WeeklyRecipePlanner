@@ -516,3 +516,270 @@ body {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+/* ===== Dev Mode ===== */
+
+/* Push main content up so it's not hidden behind the console */
+.app.dev-mode-active {
+  padding-bottom: 320px;
+}
+
+/* Floating toggle button */
+.dev-mode-toggle {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 10000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.dev-mode-active .dev-mode-toggle {
+  bottom: 308px;
+  width: auto;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+}
+
+.dev-mode-toggle:hover {
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.05);
+}
+
+/* Console panel */
+.dev-console {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Menlo', monospace;
+  font-size: 0.8rem;
+  border-top: 3px solid var(--color-primary);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  animation: devConsoleSlideUp 0.2s ease-out;
+}
+
+@keyframes devConsoleSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Toolbar */
+.dev-console-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+  flex-shrink: 0;
+}
+
+.dev-console-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #cba6f7;
+  white-space: nowrap;
+}
+
+.dev-console-filters {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.dev-console-filter-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #a6adc8;
+  padding: 2px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dev-console-filter-btn:hover {
+  background: #313244;
+  color: #cdd6f4;
+}
+
+.dev-console-filter-btn.active {
+  background: #45475a;
+  color: #cdd6f4;
+  border-color: #585b70;
+}
+
+.dev-console-filter-btn.active.error {
+  background: #45233b;
+  color: #f38ba8;
+  border-color: #f38ba8;
+}
+
+.dev-console-filter-btn.active.warn {
+  background: #45402b;
+  color: #f9e2af;
+  border-color: #f9e2af;
+}
+
+.dev-console-badge {
+  font-size: 0.65rem;
+  padding: 0 5px;
+  border-radius: 8px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.dev-console-badge.error {
+  background: #f38ba8;
+  color: #1e1e2e;
+}
+
+.dev-console-badge.warn {
+  background: #f9e2af;
+  color: #1e1e2e;
+}
+
+.dev-console-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.dev-console-action-btn {
+  background: transparent;
+  border: 1px solid #313244;
+  color: #a6adc8;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+}
+
+.dev-console-action-btn:hover {
+  background: #313244;
+  color: #cdd6f4;
+}
+
+/* Entries list */
+.dev-console-entries {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.dev-console-entries::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dev-console-entries::-webkit-scrollbar-track {
+  background: #1e1e2e;
+}
+
+.dev-console-entries::-webkit-scrollbar-thumb {
+  background: #45475a;
+  border-radius: 3px;
+}
+
+.dev-console-empty {
+  padding: 20px;
+  text-align: center;
+  color: #585b70;
+  font-style: italic;
+}
+
+/* Single entry */
+.dev-console-entry {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 8px;
+  padding: 3px 12px;
+  border-bottom: 1px solid rgba(49, 50, 68, 0.5);
+  cursor: default;
+  transition: background 0.1s;
+}
+
+.dev-console-entry:hover {
+  background: rgba(49, 50, 68, 0.5);
+}
+
+.dev-console-entry[role="button"] {
+  cursor: pointer;
+}
+
+/* Level colors */
+.dev-console-entry.warn {
+  background: rgba(249, 226, 175, 0.05);
+  color: #f9e2af;
+}
+
+.dev-console-entry.error {
+  background: rgba(243, 139, 168, 0.08);
+  color: #f38ba8;
+}
+
+.dev-console-entry.info {
+  color: #89b4fa;
+}
+
+.dev-console-entry-icon {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+
+.dev-console-entry-time {
+  color: #585b70;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  align-self: start;
+  margin-top: 1px;
+}
+
+.dev-console-entry-msg {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.dev-console-entry-expand {
+  color: #585b70;
+  font-size: 0.65rem;
+  align-self: start;
+  margin-top: 2px;
+}
+
+.dev-console-entry-details {
+  grid-column: 1 / -1;
+  background: #11111b;
+  border: 1px solid #313244;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  color: #f38ba8;
+}
