@@ -1,0 +1,21 @@
+services:
+  server:
+    build:
+      context: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-5.2}
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    restart: unless-stopped
