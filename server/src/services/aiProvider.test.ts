@@ -1,5 +1,5 @@
 import { OpenAIProvider } from './aiProvider';
-import { MealPlanRequest } from '../types';
+import { MealPlanRequest, RecipeRequest } from '../types';
 
 // Helper to access private members for mocking
 function setClient(
@@ -94,5 +94,58 @@ describe('OpenAIProvider', () => {
         }),
       })
     );
+  });
+
+  describe('generateRecipe', () => {
+    const recipeRequest: RecipeRequest = {
+      mealName: 'Oatmeal',
+      mealDescription: 'Hearty oats',
+      ingredients: [{ name: 'Oats', quantity: '1', unit: 'cup' }],
+      prepTime: '10 min',
+      dietaryRestrictions: ['vegetarian'],
+      favoriteCuisines: ['Italian'],
+    };
+
+    it('should throw when AI returns empty response', async () => {
+      const mockCreate = jest.fn().mockResolvedValue({
+        output_text: null,
+      });
+      setClient(provider, { responses: { create: mockCreate } });
+
+      await expect(provider.generateRecipe(recipeRequest)).rejects.toThrow(
+        'No response received from AI model'
+      );
+    });
+
+    it('should parse valid recipe response and add generatedAt', async () => {
+      const mockResponse = {
+        mealName: 'Oatmeal',
+        ingredients: [{ name: 'Oats', quantity: '1', unit: 'cup', notes: 'rolled' }],
+        instructions: ['Boil water.', 'Add oats.'],
+        tips: 'Add honey.',
+      };
+      const mockCreate = jest.fn().mockResolvedValue({
+        output_text: JSON.stringify(mockResponse),
+      });
+      setClient(provider, { responses: { create: mockCreate } });
+
+      const result = await provider.generateRecipe(recipeRequest);
+      expect(result.generatedAt).toBeDefined();
+      expect(result.mealName).toBe('Oatmeal');
+      expect(result.ingredients).toHaveLength(1);
+      expect(result.instructions).toHaveLength(2);
+      expect(mockCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          model: 'gpt-5.2',
+          text: expect.objectContaining({
+            format: expect.objectContaining({
+              type: 'json_schema',
+              name: 'recipe',
+              strict: true,
+            }),
+          }),
+        })
+      );
+    });
   });
 });

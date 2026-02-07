@@ -10,6 +10,7 @@ AI-powered weekly meal planner with macro tracking and shopping list generation.
 - **No-repeat option** — Exclude last week's meals to keep things fresh
 - **Consolidated shopping list** — Aggregated by category (Produce, Dairy, Meat & Seafood, etc.)
 - **Export options** — Copy shopping list to clipboard or download as Markdown
+- **Recipe viewer** — Click any meal name to view a full AI-generated recipe with ingredients and step-by-step instructions in a modal; recipes are cached per session for instant re-access, and can be copied to clipboard or saved as Markdown
 - **Free text input** — Provide any additional context for the AI to consider
 - **Dev Console** — Built-in developer console for real-time log monitoring and error details (toggle with Ctrl+Shift+D)
 - **Dockerized** — Run locally or deploy to any cloud platform
@@ -106,6 +107,7 @@ WeeklyRecipePlanner/
 │   │   │   ├── DevConsole.tsx     # Dev mode log viewer
 │   │   │   ├── MealPlanForm.tsx
 │   │   │   ├── MealPlanDisplay.tsx
+│   │   │   ├── RecipeModal.tsx     # On-demand recipe viewer modal
 │   │   │   ├── ShoppingListDisplay.tsx
 │   │   │   └── TagInput.tsx
 │   │   ├── services/        # API client & dev logger

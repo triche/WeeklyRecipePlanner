@@ -28,6 +28,7 @@
         <li><strong>No-repeat option</strong> Exclude last week's meals to keep things fresh</li>
         <li><strong>Consolidated shopping list</strong> Aggregated by category (Produce, Dairy, Meat &amp; Seafood, etc.)</li>
         <li><strong>Export options</strong> Copy shopping list to clipboard or download as Markdown</li>
+        <li><strong>Recipe viewer</strong> Click any meal name to view a full AI-generated recipe with ingredients and step-by-step instructions in a modal; recipes are cached per session for instant re-access, and can be copied to clipboard or saved as Markdown</li>
         <li><strong>Free text input</strong> Provide any additional context for the AI to consider</li>
         <li><strong>Dev Console</strong> Built-in developer console for real-time log monitoring and error details (toggle with Ctrl+Shift+D)</li>
         <li><strong>Dockerized</strong> Run locally or deploy to any cloud platform</li>
@@ -125,6 +126,7 @@
 │   │   │   ├── DevConsole.tsx     <span class="note"># Dev mode log viewer</span>
 │   │   │   ├── MealPlanForm.tsx
 │   │   │   ├── MealPlanDisplay.tsx
+│   │   │   ├── RecipeModal.tsx     <span class="note"># On-demand recipe viewer modal</span>
 │   │   │   ├── ShoppingListDisplay.tsx
 │   │   │   └── TagInput.tsx
 │   │   ├── <span class="folder">services/</span>        <span class="note"># API client &amp; dev logger</span>

@@ -59,3 +59,30 @@ export interface MealPlanResponse {
   shoppingList: ShoppingList;
   generatedAt: string;
 }
+
+// ---- Recipe Detail Types ----
+
+export interface RecipeRequest {
+  mealName: string;
+  mealDescription: string;
+  ingredients: { name: string; quantity: string; unit: string }[];
+  prepTime: string;
+  dietaryRestrictions: string[];
+  favoriteCuisines: string[];
+  macros?: MacroGoals;
+}
+
+export interface RecipeIngredient {
+  name: string;
+  quantity: string;
+  unit: string;
+  notes: string;
+}
+
+export interface RecipeResponse {
+  mealName: string;
+  ingredients: RecipeIngredient[];
+  instructions: string[];
+  tips: string;
+  generatedAt: string;
+}
