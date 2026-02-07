@@ -2,11 +2,12 @@ import express from 'express';
 import request from 'supertest';
 import { createApp } from '../app';
 import { AIProvider } from '../services';
-import { MealPlanResponse, MealPlanRequest } from '../types';
+import { MealPlanResponse, MealPlanRequest, RecipeResponse, RecipeRequest } from '../types';
 
 // Minimal mock AI provider for integration tests
 class MockAIProvider implements AIProvider {
   generateMealPlan = jest.fn<Promise<MealPlanResponse>, [MealPlanRequest]>();
+  generateRecipe = jest.fn<Promise<RecipeResponse>, [RecipeRequest]>();
 }
 
 describe('API Routes', () => {
@@ -85,6 +86,54 @@ describe('API Routes', () => {
         .send(validRequest);
       expect(res.status).toBe(500);
       expect(res.body.error).toContain('Failed to generate');
+    });
+  });
+
+  describe('POST /api/meal-plan/recipe', () => {
+    const validRecipeRequest = {
+      mealName: 'Classic Oatmeal',
+      mealDescription: 'Hearty oats',
+      ingredients: [{ name: 'Oats', quantity: '1', unit: 'cup' }],
+      prepTime: '10 min',
+      dietaryRestrictions: [],
+      favoriteCuisines: [],
+    };
+
+    it('should return 400 for missing mealName', async () => {
+      const res = await request(app)
+        .post('/api/meal-plan/recipe')
+        .send({ mealName: '' });
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Validation error');
+    });
+
+    it('should return recipe on success', async () => {
+      const mockRecipe: RecipeResponse = {
+        mealName: 'Classic Oatmeal',
+        ingredients: [{ name: 'Oats', quantity: '1', unit: 'cup', notes: 'rolled' }],
+        instructions: ['Boil water.', 'Add oats.'],
+        tips: 'Add honey.',
+        generatedAt: new Date().toISOString(),
+      };
+      mockProvider.generateRecipe.mockResolvedValue(mockRecipe);
+
+      const res = await request(app)
+        .post('/api/meal-plan/recipe')
+        .send(validRecipeRequest);
+      expect(res.status).toBe(200);
+      expect(res.body.mealName).toBe('Classic Oatmeal');
+      expect(res.body.ingredients).toHaveLength(1);
+      expect(res.body.instructions).toHaveLength(2);
+    });
+
+    it('should return 500 when AI provider fails', async () => {
+      mockProvider.generateRecipe.mockRejectedValue(new Error('AI error'));
+
+      const res = await request(app)
+        .post('/api/meal-plan/recipe')
+        .send(validRecipeRequest);
+      expect(res.status).toBe(500);
+      expect(res.body.error).toContain('Failed to generate recipe');
     });
   });
 });

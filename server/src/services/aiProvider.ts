@@ -1,8 +1,9 @@
 import OpenAI from 'openai';
-import { MealPlanRequest, MealPlanResponse } from '../types';
+import { MealPlanRequest, MealPlanResponse, RecipeRequest, RecipeResponse } from '../types';
 
 export interface AIProvider {
   generateMealPlan(request: MealPlanRequest): Promise<MealPlanResponse>;
+  generateRecipe(request: RecipeRequest): Promise<RecipeResponse>;
 }
 
 /**
@@ -99,6 +100,42 @@ const mealPlanJsonSchema = {
   },
 } as const;
 
+/**
+ * JSON Schema for the recipe response, used with the Responses API
+ * structured output (`text.format` with `json_schema`).
+ */
+const recipeJsonSchema = {
+  name: 'recipe',
+  strict: true,
+  schema: {
+    type: 'object',
+    properties: {
+      mealName: { type: 'string' },
+      ingredients: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            quantity: { type: 'string' },
+            unit: { type: 'string' },
+            notes: { type: 'string' },
+          },
+          required: ['name', 'quantity', 'unit', 'notes'],
+          additionalProperties: false,
+        },
+      },
+      instructions: {
+        type: 'array',
+        items: { type: 'string' },
+      },
+      tips: { type: 'string' },
+    },
+    required: ['mealName', 'ingredients', 'instructions', 'tips'],
+    additionalProperties: false,
+  },
+} as const;
+
 export class OpenAIProvider implements AIProvider {
   private client: OpenAI;
   private model: string;
@@ -134,6 +171,87 @@ export class OpenAIProvider implements AIProvider {
     const parsed = JSON.parse(content) as MealPlanResponse;
     parsed.generatedAt = new Date().toISOString();
     return parsed;
+  }
+
+  async generateRecipe(request: RecipeRequest): Promise<RecipeResponse> {
+    const instructions = this.buildRecipeInstructions();
+    const input = this.buildRecipeInput(request);
+
+    const response = await this.client.responses.create({
+      model: this.model,
+      instructions,
+      input,
+      temperature: 0.7,
+      text: {
+        format: {
+          type: 'json_schema',
+          ...recipeJsonSchema,
+        },
+      },
+      store: false,
+    });
+
+    const content = response.output_text;
+    if (!content) {
+      throw new Error('No response received from AI model');
+    }
+
+    const parsed = JSON.parse(content) as RecipeResponse;
+    parsed.generatedAt = new Date().toISOString();
+    return parsed;
+  }
+
+  private buildRecipeInstructions(): string {
+    return `You are a professional chef and recipe writer. Generate a detailed recipe with exact ingredients and step-by-step instructions.
+
+IMPORTANT RULES:
+- Provide precise ingredient quantities and preparation notes
+- Write clear, numbered step-by-step cooking instructions
+- Each instruction step should be a single, clear action
+- Include any helpful tips for the recipe
+- Use the provided ingredients as the base but add common pantry items (salt, pepper, oil, etc.) as needed
+- Keep instructions practical and achievable for a home cook`;
+  }
+
+  private buildRecipeInput(request: RecipeRequest): string {
+    const parts: string[] = [];
+
+    parts.push(`Recipe: ${request.mealName}`);
+
+    if (request.mealDescription) {
+      parts.push(`Description: ${request.mealDescription}`);
+    }
+
+    if (request.prepTime) {
+      parts.push(`Target Prep Time: ${request.prepTime}`);
+    }
+
+    if (request.ingredients.length > 0) {
+      parts.push(`\nPlanned Ingredients:`);
+      for (const ing of request.ingredients) {
+        parts.push(`- ${ing.quantity} ${ing.unit} ${ing.name}`);
+      }
+    }
+
+    if (request.dietaryRestrictions.length > 0) {
+      parts.push(`\nDietary Restrictions: ${request.dietaryRestrictions.join(', ')}`);
+    }
+
+    if (request.favoriteCuisines.length > 0) {
+      parts.push(`\nCuisine Style: ${request.favoriteCuisines.join(', ')}`);
+    }
+
+    if (request.macros) {
+      parts.push(`\nTarget Macros:`);
+      parts.push(`- Protein: ${request.macros.protein}g`);
+      parts.push(`- Carbohydrates: ${request.macros.carbohydrates}g`);
+      parts.push(`- Fats: ${request.macros.fats}g`);
+      if (request.macros.calories) {
+        parts.push(`- Calories: ${request.macros.calories}`);
+      }
+    }
+
+    return parts.join('\n');
   }
 
   private buildInstructions(): string {

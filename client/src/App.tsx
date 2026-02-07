@@ -88,7 +88,7 @@ const App: React.FC = () => {
 
       {mealPlan && !isLoading && (
         <>
-          <MealPlanDisplay weekPlan={mealPlan.weekPlan} />
+          <MealPlanDisplay weekPlan={mealPlan.weekPlan} formData={formData} />
           <ShoppingListDisplay shoppingList={mealPlan.shoppingList} />
         </>
       )}

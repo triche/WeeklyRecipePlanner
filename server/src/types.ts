@@ -77,3 +77,36 @@ export interface MealPlanResponse {
   shoppingList: ShoppingList;
   generatedAt: string;
 }
+
+// ---- Recipe Detail Types ----
+
+export const RecipeRequestSchema = z.object({
+  mealName: z.string().min(1),
+  mealDescription: z.string().default(''),
+  ingredients: z.array(z.object({
+    name: z.string(),
+    quantity: z.string(),
+    unit: z.string(),
+  })).default([]),
+  prepTime: z.string().default(''),
+  dietaryRestrictions: z.array(z.string()).default([]),
+  favoriteCuisines: z.array(z.string()).default([]),
+  macros: MacroGoalsSchema.optional(),
+});
+
+export type RecipeRequest = z.infer<typeof RecipeRequestSchema>;
+
+export interface RecipeResponse {
+  mealName: string;
+  ingredients: RecipeIngredient[];
+  instructions: string[];
+  tips: string;
+  generatedAt: string;
+}
+
+export interface RecipeIngredient {
+  name: string;
+  quantity: string;
+  unit: string;
+  notes: string;
+}

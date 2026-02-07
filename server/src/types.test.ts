@@ -1,4 +1,4 @@
-import { MealPlanRequestSchema } from './types';
+import { MealPlanRequestSchema, RecipeRequestSchema } from './types';
 
 describe('MealPlanRequestSchema', () => {
   it('should validate a complete valid request', () => {
@@ -62,5 +62,41 @@ describe('MealPlanRequestSchema', () => {
     };
 
     expect(() => MealPlanRequestSchema.parse(invalidRequest)).toThrow();
+  });
+});
+
+describe('RecipeRequestSchema', () => {
+  it('should validate a complete recipe request', () => {
+    const validRequest = {
+      mealName: 'Classic Oatmeal',
+      mealDescription: 'Hearty oats with toppings',
+      ingredients: [{ name: 'Oats', quantity: '1', unit: 'cup' }],
+      prepTime: '10 min',
+      dietaryRestrictions: ['vegetarian'],
+      favoriteCuisines: ['Italian'],
+      macros: { protein: 10, carbohydrates: 40, fats: 5, fiber: 6, calories: 250 },
+    };
+
+    const result = RecipeRequestSchema.parse(validRequest);
+    expect(result.mealName).toBe('Classic Oatmeal');
+    expect(result.ingredients).toHaveLength(1);
+  });
+
+  it('should apply defaults for optional fields', () => {
+    const minimal = { mealName: 'Toast' };
+    const result = RecipeRequestSchema.parse(minimal);
+    expect(result.mealDescription).toBe('');
+    expect(result.ingredients).toEqual([]);
+    expect(result.prepTime).toBe('');
+    expect(result.dietaryRestrictions).toEqual([]);
+    expect(result.favoriteCuisines).toEqual([]);
+  });
+
+  it('should reject empty mealName', () => {
+    expect(() => RecipeRequestSchema.parse({ mealName: '' })).toThrow();
+  });
+
+  it('should reject missing mealName', () => {
+    expect(() => RecipeRequestSchema.parse({})).toThrow();
   });
 });
