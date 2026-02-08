@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { vi, type Mock } from 'vitest';
 import MealPlanDisplay from './MealPlanDisplay';
-import { MealPlanRequest, ALL_DAYS } from '../types';
+import { MealPlanRequest, ALL_DAYS, ALL_MEAL_SLOTS } from '../types';
 import * as api from '../services/api';
 
 // Mock the API module
@@ -14,6 +14,7 @@ const mockFetchRecipe = api.fetchRecipe as Mock;
 const mockFormData: MealPlanRequest = {
   macroGoals: { protein: 150, carbohydrates: 200, fats: 65, fiber: 30 },
   selectedDays: [...ALL_DAYS],
+  selectedMeals: [...ALL_MEAL_SLOTS],
   dietaryRestrictions: ['vegetarian'],
   favoriteCuisines: ['Italian'],
   specificMeals: [],

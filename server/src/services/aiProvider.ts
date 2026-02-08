@@ -259,8 +259,9 @@ IMPORTANT RULES:
 
 IMPORTANT RULES:
 - Only include days that the user has selected
-- Every day MUST include: breakfast, morningSnack, lunch, afternoonSnack, dinner
-- Daily macro totals MUST NOT exceed the user's targets by more than 10%. It is acceptable to be under the target, but never more than 10% over.
+- Only include meal slots that the user has selected (e.g. if the user deselected morningSnack and afternoonSnack, do NOT generate those meals). The possible meal slots are: breakfast, morningSnack, lunch, afternoonSnack, dinner.
+- For any deselected meal slot, omit it from the day entirely — still include the slot key in the JSON but use a placeholder meal with name "—", empty description, empty ingredients, zero macros, and empty prepTime.
+- Daily macro totals should only account for the selected meal slots.
 - If a meal would push a macro over the 10% ceiling, reduce portion sizes to stay within the limit.
 - When adjusting portions to fit within limits, prioritize hitting targets in this order: protein first, then carbohydrates, then fiber, then fats, then calories. A macro higher in this list should be closer to its target than one lower in the list.
 - The shopping list MUST aggregate identical ingredients across all meals
@@ -281,6 +282,17 @@ IMPORTANT RULES:
 
     if (request.selectedDays && request.selectedDays.length > 0 && request.selectedDays.length < 7) {
       parts.push(`\nDays to plan: ${request.selectedDays.join(', ')}`);
+    }
+
+    if (request.selectedMeals && request.selectedMeals.length > 0 && request.selectedMeals.length < 5) {
+      const slotLabels: Record<string, string> = {
+        breakfast: 'Breakfast',
+        morningSnack: 'Morning Snack',
+        lunch: 'Lunch',
+        afternoonSnack: 'Afternoon Snack',
+        dinner: 'Dinner',
+      };
+      parts.push(`\nMeals to include: ${request.selectedMeals.map((s) => slotLabels[s] || s).join(', ')}`);
     }
 
     if (request.dietaryRestrictions.length > 0) {

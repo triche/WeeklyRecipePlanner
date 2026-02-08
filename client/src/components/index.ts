@@ -4,4 +4,5 @@ export { default as ShoppingListDisplay } from './ShoppingListDisplay';
 export { default as RecipeModal } from './RecipeModal';
 export { default as TagInput } from './TagInput';
 export { default as DayOfWeekSelector } from './DayOfWeekSelector';
+export { default as MealSlotSelector } from './MealSlotSelector';
 export { default as DevConsole } from './DevConsole';

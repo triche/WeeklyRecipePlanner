@@ -12,9 +12,22 @@ export type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Frida
 
 export const ALL_DAYS: DayOfWeek[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+export type MealSlot = 'breakfast' | 'morningSnack' | 'lunch' | 'afternoonSnack' | 'dinner';
+
+export const ALL_MEAL_SLOTS: MealSlot[] = ['breakfast', 'morningSnack', 'lunch', 'afternoonSnack', 'dinner'];
+
+export const MEAL_SLOT_LABELS: Record<MealSlot, string> = {
+  breakfast: 'Breakfast',
+  morningSnack: 'Morning Snack',
+  lunch: 'Lunch',
+  afternoonSnack: 'Afternoon Snack',
+  dinner: 'Dinner',
+};
+
 export interface MealPlanRequest {
   macroGoals: MacroGoals;
   selectedDays: DayOfWeek[];
+  selectedMeals: MealSlot[];
   dietaryRestrictions: string[];
   favoriteCuisines: string[];
   specificMeals: string[];

@@ -6,6 +6,7 @@ AI-powered weekly meal planner with macro tracking and shopping list generation.
 
 - **Macro-based meal planning** — Set daily targets for protein, carbs, fats, fiber, and calories
 - **Day-of-week selector** — Choose which days to include in your plan (all 7 on by default)
+- **Meal selector** — Choose which meals to include per day: Breakfast, Morning Snack, Lunch, Afternoon Snack, Dinner (all on by default)
 - **AI-generated plans** — Full 7-day meal plans with breakfast, lunch, dinner, and morning/afternoon snacks
 - **Dietary preferences** — Support for restrictions (vegetarian, gluten-free, etc.) and favorite cuisines
 - **No-repeat option** — Exclude last week's meals to keep things fresh
@@ -109,6 +110,7 @@ WeeklyRecipePlanner/
 │   │   │   ├── DevConsole.tsx     # Dev mode log viewer
 │   │   │   ├── MealPlanForm.tsx
 │   │   │   ├── MealPlanDisplay.tsx
+│   │   │   ├── MealSlotSelector.tsx # Meal slot toggle chips
 │   │   │   ├── RecipeModal.tsx     # On-demand recipe viewer modal
 │   │   │   ├── ShoppingListDisplay.tsx
 │   │   │   └── TagInput.tsx

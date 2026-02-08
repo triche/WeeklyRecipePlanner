@@ -20,9 +20,20 @@ export const ALL_DAYS: DayOfWeek[] = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
 ];
 
+export const MealSlotEnum = z.enum([
+  'breakfast', 'morningSnack', 'lunch', 'afternoonSnack', 'dinner',
+]);
+
+export type MealSlot = z.infer<typeof MealSlotEnum>;
+
+export const ALL_MEAL_SLOTS: MealSlot[] = [
+  'breakfast', 'morningSnack', 'lunch', 'afternoonSnack', 'dinner',
+];
+
 export const MealPlanRequestSchema = z.object({
   macroGoals: MacroGoalsSchema,
   selectedDays: z.array(DayOfWeekEnum).min(1, 'Select at least one day').default([...ALL_DAYS]),
+  selectedMeals: z.array(MealSlotEnum).min(1, 'Select at least one meal').default([...ALL_MEAL_SLOTS]),
   dietaryRestrictions: z.array(z.string()).default([]),
   favoriteCuisines: z.array(z.string()).default([]),
   specificMeals: z.array(z.string()).default([]),

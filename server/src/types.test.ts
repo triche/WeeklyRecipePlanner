@@ -11,6 +11,7 @@ describe('MealPlanRequestSchema', () => {
         calories: 2000,
       },
       selectedDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      selectedMeals: ['breakfast', 'morningSnack', 'lunch', 'afternoonSnack', 'dinner'],
       dietaryRestrictions: ['vegetarian'],
       favoriteCuisines: ['Italian'],
       specificMeals: ['Greek Salad'],
@@ -35,6 +36,7 @@ describe('MealPlanRequestSchema', () => {
 
     const result = MealPlanRequestSchema.parse(minimalRequest);
     expect(result.selectedDays).toEqual(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
+    expect(result.selectedMeals).toEqual(['breakfast', 'morningSnack', 'lunch', 'afternoonSnack', 'dinner']);
     expect(result.dietaryRestrictions).toEqual([]);
     expect(result.favoriteCuisines).toEqual([]);
     expect(result.specificMeals).toEqual([]);
@@ -89,6 +91,31 @@ describe('MealPlanRequestSchema', () => {
     };
     const result = MealPlanRequestSchema.parse(request);
     expect(result.selectedDays).toEqual(['Monday', 'Wednesday', 'Friday']);
+  });
+
+  it('should reject an empty selectedMeals array', () => {
+    const invalidRequest = {
+      macroGoals: { protein: 100, carbohydrates: 150, fats: 50, fiber: 25 },
+      selectedMeals: [],
+    };
+    expect(() => MealPlanRequestSchema.parse(invalidRequest)).toThrow();
+  });
+
+  it('should reject invalid meal slot names in selectedMeals', () => {
+    const invalidRequest = {
+      macroGoals: { protein: 100, carbohydrates: 150, fats: 50, fiber: 25 },
+      selectedMeals: ['brunch'],
+    };
+    expect(() => MealPlanRequestSchema.parse(invalidRequest)).toThrow();
+  });
+
+  it('should accept a partial selectedMeals list', () => {
+    const request = {
+      macroGoals: { protein: 100, carbohydrates: 150, fats: 50, fiber: 25 },
+      selectedMeals: ['breakfast', 'lunch', 'dinner'],
+    };
+    const result = MealPlanRequestSchema.parse(request);
+    expect(result.selectedMeals).toEqual(['breakfast', 'lunch', 'dinner']);
   });
 });
 
