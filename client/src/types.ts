@@ -31,8 +31,6 @@ export interface MealPlanRequest {
   dietaryRestrictions: string[];
   favoriteCuisines: string[];
   specificMeals: string[];
-  excludePreviousWeekMeals: boolean;
-  previousWeekMeals: string[];
   additionalContext: string;
 }
 

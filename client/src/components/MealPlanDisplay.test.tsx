@@ -18,8 +18,6 @@ const mockFormData: MealPlanRequest = {
   dietaryRestrictions: ['vegetarian'],
   favoriteCuisines: ['Italian'],
   specificMeals: [],
-  excludePreviousWeekMeals: false,
-  previousWeekMeals: [],
   additionalContext: '',
 };
 

@@ -18,8 +18,6 @@ const defaultFormData: MealPlanRequest = {
   dietaryRestrictions: [],
   favoriteCuisines: [],
   specificMeals: [],
-  excludePreviousWeekMeals: false,
-  previousWeekMeals: [],
   additionalContext: '',
 };
 

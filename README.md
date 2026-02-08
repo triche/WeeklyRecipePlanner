@@ -9,7 +9,6 @@ AI-powered weekly meal planner with macro tracking and shopping list generation.
 - **Meal selector** — Choose which meals to include per day: Breakfast, Morning Snack, Lunch, Afternoon Snack, Dinner (all on by default)
 - **AI-generated plans** — Full 7-day meal plans with breakfast, lunch, dinner, and morning/afternoon snacks
 - **Dietary preferences** — Support for restrictions (vegetarian, gluten-free, etc.) and favorite cuisines
-- **No-repeat option** — Exclude last week's meals to keep things fresh
 - **Consolidated shopping list** — Aggregated by category (Produce, Dairy, Meat & Seafood, etc.)
 - **Export options** — Copy shopping list to clipboard or download as Markdown
 - **Recipe viewer** — Click any meal name to view a full AI-generated recipe with ingredients and step-by-step instructions in a modal; recipes are cached per session for instant re-access, and can be copied to clipboard or saved as Markdown

@@ -15,8 +15,6 @@ describe('MealPlanRequestSchema', () => {
       dietaryRestrictions: ['vegetarian'],
       favoriteCuisines: ['Italian'],
       specificMeals: ['Greek Salad'],
-      excludePreviousWeekMeals: true,
-      previousWeekMeals: ['Pasta Carbonara'],
       additionalContext: 'I like spicy food',
     };
 
@@ -40,8 +38,6 @@ describe('MealPlanRequestSchema', () => {
     expect(result.dietaryRestrictions).toEqual([]);
     expect(result.favoriteCuisines).toEqual([]);
     expect(result.specificMeals).toEqual([]);
-    expect(result.excludePreviousWeekMeals).toBe(false);
-    expect(result.previousWeekMeals).toEqual([]);
     expect(result.additionalContext).toBe('');
   });
 

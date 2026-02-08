@@ -37,8 +37,6 @@ export const MealPlanRequestSchema = z.object({
   dietaryRestrictions: z.array(z.string()).default([]),
   favoriteCuisines: z.array(z.string()).default([]),
   specificMeals: z.array(z.string()).default([]),
-  excludePreviousWeekMeals: z.boolean().default(false),
-  previousWeekMeals: z.array(z.string()).default([]),
   additionalContext: z.string().default(''),
 });
 

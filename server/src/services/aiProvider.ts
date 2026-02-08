@@ -307,10 +307,6 @@ IMPORTANT RULES:
       parts.push(`\nSpecific Meals to Include: ${request.specificMeals.join(', ')}`);
     }
 
-    if (request.excludePreviousWeekMeals && request.previousWeekMeals.length > 0) {
-      parts.push(`\nDo NOT include these meals from last week: ${request.previousWeekMeals.join(', ')}`);
-    }
-
     if (request.additionalContext) {
       parts.push(`\nAdditional Context: ${request.additionalContext}`);
     }

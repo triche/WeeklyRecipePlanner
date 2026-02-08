@@ -46,8 +46,6 @@ describe('OpenAIProvider', () => {
       dietaryRestrictions: [],
       favoriteCuisines: [],
       specificMeals: [],
-      excludePreviousWeekMeals: false,
-      previousWeekMeals: [],
       additionalContext: '',
     };
 
@@ -77,8 +75,6 @@ describe('OpenAIProvider', () => {
       dietaryRestrictions: ['vegetarian'],
       favoriteCuisines: ['Italian'],
       specificMeals: ['Salad'],
-      excludePreviousWeekMeals: true,
-      previousWeekMeals: ['Old Pasta'],
       additionalContext: 'I like it spicy',
     };
 

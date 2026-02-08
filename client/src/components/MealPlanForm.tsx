@@ -125,25 +125,6 @@ const MealPlanForm: React.FC<MealPlanFormProps> = ({ formData, onChange, onSubmi
           placeholder="e.g., Chicken stir-fry, Greek salad (press Enter)"
         />
 
-        <div className="checkbox-group">
-          <input
-            type="checkbox"
-            id="excludePrevious"
-            checked={formData.excludePreviousWeekMeals}
-            onChange={(e) => onChange({ ...formData, excludePreviousWeekMeals: e.target.checked })}
-          />
-          <label htmlFor="excludePrevious">Don&apos;t repeat meals from previous week</label>
-        </div>
-
-        {formData.excludePreviousWeekMeals && (
-          <TagInput
-            label="Previous Week's Meals to Exclude"
-            tags={formData.previousWeekMeals}
-            onChange={(tags) => onChange({ ...formData, previousWeekMeals: tags })}
-            placeholder="Enter meals from last week (press Enter)"
-          />
-        )}
-
         <div className="form-group">
           <label htmlFor="additionalContext">Additional Context for AI</label>
           <textarea
