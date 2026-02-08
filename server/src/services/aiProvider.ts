@@ -260,7 +260,9 @@ IMPORTANT RULES:
 IMPORTANT RULES:
 - Only include days that the user has selected
 - Every day MUST include: breakfast, morningSnack, lunch, afternoonSnack, dinner
-- Daily macros should be as close as possible to the user's targets
+- Daily macro totals MUST NOT exceed the user's targets by more than 10%. It is acceptable to be under the target, but never more than 10% over.
+- If a meal would push a macro over the 10% ceiling, reduce portion sizes to stay within the limit.
+- When adjusting portions to fit within limits, prioritize hitting targets in this order: protein first, then carbohydrates, then fiber, then fats, then calories. A macro higher in this list should be closer to its target than one lower in the list.
 - The shopping list MUST aggregate identical ingredients across all meals
 - Categorize shopping list items into: Produce, Dairy, Meat & Seafood, Bakery, Frozen, Pantry, Beverages, Spices & Seasonings, Other`;
   }
