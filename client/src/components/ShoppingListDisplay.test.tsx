@@ -14,12 +14,12 @@ const mockShoppingList = {
 
 describe('ShoppingListDisplay', () => {
   it('renders shopping list title', () => {
-    render(<ShoppingListDisplay shoppingList={mockShoppingList} />);
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={1} />);
     expect(screen.getByText(/Shopping List/)).toBeInTheDocument();
   });
 
   it('groups items by category', () => {
-    render(<ShoppingListDisplay shoppingList={mockShoppingList} />);
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={1} />);
     expect(screen.getByText('Produce')).toBeInTheDocument();
     expect(screen.getByText('Dairy')).toBeInTheDocument();
     expect(screen.getByText('Meat & Seafood')).toBeInTheDocument();
@@ -27,7 +27,7 @@ describe('ShoppingListDisplay', () => {
   });
 
   it('displays all items with quantities', () => {
-    render(<ShoppingListDisplay shoppingList={mockShoppingList} />);
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={1} />);
     expect(screen.getByText('Chicken breast')).toBeInTheDocument();
     expect(screen.getByText('3 lbs')).toBeInTheDocument();
     expect(screen.getByText('Broccoli')).toBeInTheDocument();
@@ -35,8 +35,28 @@ describe('ShoppingListDisplay', () => {
   });
 
   it('renders copy and download buttons', () => {
-    render(<ShoppingListDisplay shoppingList={mockShoppingList} />);
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={1} />);
     expect(screen.getByText(/Copy to Clipboard/)).toBeInTheDocument();
     expect(screen.getByText(/Save as Markdown/)).toBeInTheDocument();
+  });
+
+  it('scales quantities by number of people', () => {
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={3} />);
+    // 3 lbs * 3 people = 9 lbs
+    expect(screen.getByText('9 lbs')).toBeInTheDocument();
+    // 2 heads * 3 = 6 heads
+    expect(screen.getByText('6 heads')).toBeInTheDocument();
+    // 7 pieces * 3 = 21 pieces
+    expect(screen.getByText('21 pieces')).toBeInTheDocument();
+  });
+
+  it('shows subtitle when numberOfPeople > 1', () => {
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={4} />);
+    expect(screen.getByText('Scaled for 4 people')).toBeInTheDocument();
+  });
+
+  it('does not show subtitle when numberOfPeople is 1', () => {
+    render(<ShoppingListDisplay shoppingList={mockShoppingList} numberOfPeople={1} />);
+    expect(screen.queryByText(/Scaled for/)).not.toBeInTheDocument();
   });
 });

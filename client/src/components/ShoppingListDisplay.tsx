@@ -3,9 +3,23 @@ import { ShoppingList as ShoppingListType } from '../types';
 
 interface ShoppingListProps {
   shoppingList: ShoppingListType;
+  numberOfPeople: number;
 }
 
-const ShoppingListDisplay: React.FC<ShoppingListProps> = ({ shoppingList }) => {
+/**
+ * Multiply a quantity string by a multiplier.
+ * Handles numeric strings (e.g. "3") and fractional strings (e.g. "1.5").
+ * Non-numeric strings are returned unchanged.
+ */
+const scaleQuantity = (qty: string, multiplier: number): string => {
+  const num = parseFloat(qty);
+  if (isNaN(num)) return qty;
+  const scaled = num * multiplier;
+  // Avoid ugly floating point artifacts: round to 2 decimal places, strip trailing zeros
+  return parseFloat(scaled.toFixed(2)).toString();
+};
+
+const ShoppingListDisplay: React.FC<ShoppingListProps> = ({ shoppingList, numberOfPeople }) => {
   const [toast, setToast] = useState<string | null>(null);
 
   const showToast = (message: string): void => {
@@ -28,10 +42,13 @@ const ShoppingListDisplay: React.FC<ShoppingListProps> = ({ shoppingList }) => {
 
   const toMarkdown = (): string => {
     let md = '# Shopping List\n\n';
+    if (numberOfPeople > 1) {
+      md += `> Scaled for ${numberOfPeople} people\n\n`;
+    }
     for (const category of sortedCategories) {
       md += `## ${category}\n\n`;
       for (const item of groupedItems[category]) {
-        md += `- [ ] ${item.name} — ${item.totalQuantity} ${item.unit}\n`;
+        md += `- [ ] ${item.name} — ${scaleQuantity(item.totalQuantity, numberOfPeople)} ${item.unit}\n`;
       }
       md += '\n';
     }
@@ -61,6 +78,9 @@ const ShoppingListDisplay: React.FC<ShoppingListProps> = ({ shoppingList }) => {
   return (
     <div className="shopping-list-section">
       <h2 className="section-title">🛒 Shopping List</h2>
+      {numberOfPeople > 1 && (
+        <p className="shopping-list-subtitle">Scaled for {numberOfPeople} people</p>
+      )}
 
       <div className="shopping-list-actions">
         <button className="btn btn-secondary btn-sm" onClick={copyToClipboard}>
@@ -80,7 +100,7 @@ const ShoppingListDisplay: React.FC<ShoppingListProps> = ({ shoppingList }) => {
                 <div key={idx} className="category-item">
                   <span className="item-name">{item.name}</span>
                   <span className="item-quantity">
-                    {item.totalQuantity} {item.unit}
+                    {scaleQuantity(item.totalQuantity, numberOfPeople)} {item.unit}
                   </span>
                 </div>
               ))}

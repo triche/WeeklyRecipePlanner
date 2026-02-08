@@ -160,6 +160,16 @@ body {
   outline: none;
 }
 
+.number-of-people input {
+  width: 100px;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--color-primary);
@@ -437,6 +447,12 @@ body {
 /* Shopping List */
 .shopping-list-section {
   margin-top: 32px;
+}
+
+.shopping-list-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
 }
 
 .shopping-list-actions {

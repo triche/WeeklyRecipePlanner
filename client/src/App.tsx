@@ -27,6 +27,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [devMode, setDevMode] = useState(false);
+  const [numberOfPeople, setNumberOfPeople] = useState(1);
 
   // Install the dev logger once on mount
   useEffect(() => {
@@ -77,6 +78,8 @@ const App: React.FC = () => {
         onChange={setFormData}
         onSubmit={handleGenerate}
         isLoading={isLoading}
+        numberOfPeople={numberOfPeople}
+        onNumberOfPeopleChange={setNumberOfPeople}
       />
 
       {isLoading && (
@@ -89,7 +92,7 @@ const App: React.FC = () => {
       {mealPlan && !isLoading && (
         <>
           <MealPlanDisplay weekPlan={mealPlan.weekPlan} formData={formData} />
-          <ShoppingListDisplay shoppingList={mealPlan.shoppingList} />
+          <ShoppingListDisplay shoppingList={mealPlan.shoppingList} numberOfPeople={numberOfPeople} />
         </>
       )}
 

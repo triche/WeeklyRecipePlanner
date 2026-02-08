@@ -9,9 +9,11 @@ interface MealPlanFormProps {
   onChange: (data: MealPlanRequest) => void;
   onSubmit: () => void;
   isLoading: boolean;
+  numberOfPeople: number;
+  onNumberOfPeopleChange: (value: number) => void;
 }
 
-const MealPlanForm: React.FC<MealPlanFormProps> = ({ formData, onChange, onSubmit, isLoading }) => {
+const MealPlanForm: React.FC<MealPlanFormProps> = ({ formData, onChange, onSubmit, isLoading, numberOfPeople, onNumberOfPeopleChange }) => {
   const updateMacros = (field: keyof MacroGoals, value: string): void => {
     const numValue = value === '' ? 0 : parseInt(value, 10);
     if (isNaN(numValue)) return;
@@ -132,6 +134,23 @@ const MealPlanForm: React.FC<MealPlanFormProps> = ({ formData, onChange, onSubmi
             value={formData.additionalContext}
             onChange={(e) => onChange({ ...formData, additionalContext: e.target.value })}
             placeholder="Any other preferences, constraints, or context you'd like the AI to consider..."
+          />
+        </div>
+
+        <div className="form-group number-of-people">
+          <label htmlFor="numberOfPeople">Number of People</label>
+          <p className="field-hint">Scales shopping list quantities (does not change the meal plan)</p>
+          <input
+            id="numberOfPeople"
+            type="number"
+            min="1"
+            max="20"
+            value={numberOfPeople}
+            onChange={(e) => {
+              const v = parseInt(e.target.value, 10);
+              if (!isNaN(v) && v >= 1 && v <= 20) onNumberOfPeopleChange(v);
+            }}
+            aria-label="Number of people"
           />
         </div>
       </div>

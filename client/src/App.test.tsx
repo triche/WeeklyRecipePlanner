@@ -31,6 +31,12 @@ describe('App', () => {
     expect(screen.getByLabelText(/Calories/i)).toBeInTheDocument();
   });
 
+  it('renders the number of people input', () => {
+    render(<App />);
+    expect(screen.getByLabelText(/Number of people/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Number of people/i)).toHaveValue(1);
+  });
+
   it('renders the generate button', () => {
     render(<App />);
     expect(screen.getByText(/Generate Meal Plan/i)).toBeInTheDocument();
